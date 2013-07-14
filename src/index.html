@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>WSO2 Data Mapping Solution</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flat and Clean.">
+    <meta name="author" content="Jenil Gogari">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootswatch.css" rel="stylesheet">
+    <link href="css/codemirror.css" rel="stylesheet">
+
+</head>
+
+<body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+<!-- Navbar ================================================== -->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="../">WSO2DF</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+
+    <!-- Masthead
+    ================================================== -->
+    <header class="jumbotron subhead" id="overview">
+        <div class="row">
+            <div class="span6">
+                <h1>POC : Data Mapping Solution</h1>
+
+                <p class="lead">Uniform Transformations.</p>
+
+                <p>By Manu Perera</p>
+            </div>
+        </div>
+        <div class="subnav">
+            <ul class="nav nav-pills">
+                <li><a href="#schema">Schema</a></li>
+                <li><a href="#trans-lang">Transformation Language</a></li>
+                <li><a href="#impl">JS Implementation</a></li>
+                <li><a href="#ref">References</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="schema">
+        <div class="page-header">
+            <h1>schema</h1>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <p>
+                    Not fully defined yet, but hopefully will look something like,
+                </p>
+                <pre>
+{ "$": ["Employee"],
+  "Employee": {
+    "firstName": "string",
+    "lastName": string,
+    "nicknames": ["string"]
+  }
+}
+                </pre>
+
+                Or
+
+                <pre>
+{
+	"title": "verbose Schema",
+	"type": "Employee",
+	"properties": {
+		"firstName": {
+			"type": "string"
+		},
+		"lastName": {
+			"type": "string"
+		},
+		"age": {
+			"description": "Age in years",
+			"type": "integer",
+			"minimum": 0
+		}
+	},
+	"required": ["firstName", "lastName"]
+}
+                </pre>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="trans-lang">
+        <div class="page-header">
+            <h1>Transformation Language</h1>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <p>
+                    Not fully defined yet, but it might look something like,
+                </p>
+                <pre>
+{
+  fullName: "$.fname + $.lname",
+  Address {
+    address: {
+      "Street": "$.address.split(',')[0]",
+      "Zip": "$.address.split(',')[1]",
+      "State": "$.address.split(',')[2]",
+    }
+    "Age": "$.dob"
+  }
+}
+                </pre>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="impl">
+        <div class="page-header">
+            <h1>JS POC Implementation</h1>
+        </div>
+
+        <div class="span12">
+            <p>
+                This is currently implemented using JavaScript eval() which is not secure. but it works. just click
+                Transform to try out.
+            </p>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span5 well">
+                <textarea id="code-in" name="code">{
+ "fname": "Polly",
+ "lname": "Parrot",
+ "dob": "1988-12-18",
+ "address": "Notlob,2344,Whoville"
+ }</textarea>
+            </div>
+
+            <div class="span5 offset2 well">
+                <textarea id="code-trans" name="code">{
+  "FullName": "$.fname + ' ' + $.lname",
+  "Address": {
+    "City": "$.address.split(',')[0]",
+    "Zip": "$.address.split(',')[1]",
+    "State": "$.address.split(',')[2]"
+  }
+ }
+                </textarea>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <a class="btn btn-primary btn-large span4 offset4" id="trans-btn">Transform</a>
+        </div>
+
+
+
+        <br/>
+        <div class="row">
+            <div class="alert alert-error span12" id="err-msg" style="display: none"></div>
+        </div>
+
+        <div class="row" id="out-div" style="display: none">
+            <div class="well span12">
+                <pre id="code-out" class="cm-s-default"></pre>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="ref">
+        <div class="page-header">
+            <h1>References</h1>
+        </div>
+        [1] http://json-schema.org/examples.html
+
+        <div class="row">
+            <div class="span6">
+                <a href="">
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Footer
+     ================================================== -->
+    <hr>
+
+    <footer id="footer">
+        <p class="pull-right"><a href="#top">Back to top</a></p>
+        Made by Manu. Contact him <a href="mailto:manu@wso2.com">manu@wso2.com</a>.<br/>
+        Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.<br/>
+        Theme is based on <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> and <a
+            href="http://bootswatch.com/flatly/">Flatly</a>. Icons from <a
+            href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a>. Web fonts from <a
+            href="http://www.google.com/webfonts">Google</a>.
+    </footer>
+
+</div>
+<!-- /container -->
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="js/jquery.smooth-scroll.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootswatch.js"></script>
+
+<script src="js/codemirror.js"></script>
+<script src="js/matchbrackets.js"></script>
+<script src="js/continuecomment.js"></script>
+<script src="js/comment.js"></script>
+<script src="js/javascript.js"></script>
+<script src="js/runmode.js"></script>
+
+<script src="js/datamap.js"></script>
+
+
+<script>
+</script>
+</body>
+</html>
